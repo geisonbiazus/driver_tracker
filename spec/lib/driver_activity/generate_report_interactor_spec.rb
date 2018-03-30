@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 module DriverActivity
-  RSpec.describe ReportInteractor do
-    describe '#generate' do
+  RSpec.describe GenerateReportInteractor do
+    describe '#run' do
       let(:event_repository) { double }
-      let(:report) { described_class.new(event_repository) }
+      let(:interactor) { described_class.new(event_repository) }
       let(:driver_id) { 1 }
       let(:date) { Date.today }
       let(:time) { Time.now }
 
-      subject(:result) { report.generate(driver_id, date) }
+      subject(:result) { interactor.run(driver_id, date) }
 
       before do
         allow(event_repository)
