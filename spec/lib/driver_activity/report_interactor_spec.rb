@@ -3,8 +3,8 @@ require 'spec_helper'
 module DriverActivity
   RSpec.describe ReportInteractor do
     describe '#generate' do
-      let(:tracking_event_repository) { double }
-      let(:report) { described_class.new(tracking_event_repository) }
+      let(:event_repository) { double }
+      let(:report) { described_class.new(event_repository) }
       let(:driver_id) { 1 }
       let(:date) { Date.today }
       let(:time) { Time.now }
@@ -12,7 +12,7 @@ module DriverActivity
       subject(:result) { report.generate(driver_id, date) }
 
       before do
-        allow(tracking_event_repository)
+        allow(event_repository)
           .to receive(:find_all_by_driver_id_and_date_sorted_chronologically)
           .with(driver_id, date)
           .and_return(tracking_events)

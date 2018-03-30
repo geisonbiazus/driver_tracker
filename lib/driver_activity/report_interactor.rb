@@ -1,11 +1,11 @@
 module DriverActivity
   class ReportInteractor
-    def initialize(tracking_event_repository)
-      @tracking_event_repository = tracking_event_repository
+    def initialize(event_repository)
+      @event_repository = event_repository
     end
 
     def generate(driver_id, date)
-      events = @tracking_event_repository
+      events = @event_repository
                .find_all_by_driver_id_and_date_sorted_chronologically(
                  driver_id, date
                )
