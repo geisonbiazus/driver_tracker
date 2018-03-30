@@ -1,6 +1,12 @@
 class DriverActivityReport
   attr_accessor :driver_id, :date, :rows
 
+  def initialize(driver_id, date)
+    self.driver_id = driver_id
+    self.date = date
+    self.rows = []
+  end
+
   class Row
     attr_accessor :from, :to, :activity
 

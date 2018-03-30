@@ -17,7 +17,7 @@ RSpec.describe DriverActivityReportInteractor do
 
     before do
       allow(tracking_event_repository)
-        .to receive(:find_by_driver_id_and_date)
+        .to receive(:find_all_by_driver_id_and_date_sorted_chronologically)
         .with(driver_id, date)
         .and_return(tracking_events)
     end
