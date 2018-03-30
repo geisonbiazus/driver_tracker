@@ -66,21 +66,21 @@ module DriverActivity
           )
         end
 
-        before do
-          allow(company_repository).to receive(:find_by_id)
-            .with(company.id).and_return(company)
-        end
-
-        it 'creates an event' do
-          interactor.run(payload)
-          expect(event_repository).to have_received(:create).with(event)
-        end
-
-        it 'returns success status' do
-          expect(interactor.run(payload)).to eq(status: :success)
-        end
-
         context 'with an existing company' do
+          before do
+            allow(company_repository).to receive(:find_by_id)
+              .with(company.id).and_return(company)
+          end
+
+          it 'creates an event' do
+            interactor.run(payload)
+            expect(event_repository).to have_received(:create).with(event)
+          end
+
+          it 'returns success status' do
+            expect(interactor.run(payload)).to eq(status: :success)
+          end
+
           context 'when event position is inside company field' do
             let(:latitude) { 2 }
             let(:longitude) { 2 }
@@ -105,6 +105,7 @@ module DriverActivity
               end
             end
           end
+
           context 'when event position is inside company field' do
             let(:latitude) { 6 }
             let(:longitude) { 6 }
@@ -128,6 +129,21 @@ module DriverActivity
                 expect(event_repository).to have_received(:create).with(event)
               end
             end
+          end
+        end
+
+        context 'with a not existing company' do
+          before do
+            allow(company_repository).to receive(:find_by_id)
+              .with(company.id).and_return(nil)
+          end
+
+          it 'returns an error response' do
+            result = interactor.run(payload)
+            expect(result[:status]).to eq :error
+            expect(result[:errors]).to include(
+              field: :company_id, type: described_class::NOT_FOUND
+            )
           end
         end
       end
