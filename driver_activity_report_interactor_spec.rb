@@ -2,6 +2,7 @@ require 'rspec'
 require 'date'
 
 require File.join(__dir__, 'tracking_event')
+require File.join(__dir__, 'driver_activity_report')
 require File.join(__dir__, 'driver_activity_report_interactor')
 
 RSpec.describe DriverActivityReportInteractor do
@@ -21,7 +22,7 @@ RSpec.describe DriverActivityReportInteractor do
 
       let(:expected_result) do
         [
-          { from: time, to: time, activity: :driving, time: 0 }
+          DriverActivityReport::Row.new(time, time, :driving)
         ]
       end
 
@@ -33,7 +34,9 @@ RSpec.describe DriverActivityReportInteractor do
       end
 
       it 'returns a one line report' do
-        expect(result).to eq expected_result
+        expect(result.driver_id).to eq driver_id
+        expect(result.date).to eq date
+        expect(result.rows).to eq expected_result
       end
     end
   end
