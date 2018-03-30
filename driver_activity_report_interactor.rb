@@ -8,9 +8,18 @@ class DriverActivityReportInteractor
     report = DriverActivityReport.new
     report.driver_id = driver_id
     report.date = date
-    report.rows = [
-      DriverActivityReport::Row.new(events.first.timestamp, events.last.timestamp, events.first.activity)
-    ]
+    report.rows = []
+
+    events.each do |event|
+      last = report.rows.last
+      if last && last.activity == event.activity
+        last.to = event.timestamp
+      else
+        report.rows << DriverActivityReport::Row.new(
+          event.timestamp, event.timestamp, event.activity
+        )
+      end
+    end
     report
   end
 end

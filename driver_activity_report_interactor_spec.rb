@@ -61,5 +61,54 @@ RSpec.describe DriverActivityReportInteractor do
         expect(result.rows).to eq expected_result
       end
     end
+
+    context 'with more than two events with the same activity' do
+      let(:from_time) { time }
+      let(:to_time) { time + 5 * 60 }
+
+      let(:tracking_events) do
+        [
+          TrackingEvent.new(timestamp: from_time, activity: :driving),
+          TrackingEvent.new(timestamp: from_time + 60, activity: :driving),
+          TrackingEvent.new(timestamp: to_time, activity: :driving)
+        ]
+      end
+
+      let(:expected_result) do
+        [
+          DriverActivityReport::Row.new(from_time, to_time, :driving)
+        ]
+      end
+
+      it 'returns a one line report with from and to set' do
+        expect(result.rows).to eq expected_result
+      end
+    end
+
+    context 'with events of different activities' do
+      let(:tracking_events) do
+        [
+          TrackingEvent.new(timestamp: time, activity: :driving),
+          TrackingEvent.new(timestamp: time + 1 * 60, activity: :driving),
+          TrackingEvent.new(timestamp: time + 2 * 60, activity: :repairing),
+          TrackingEvent.new(timestamp: time + 3 * 60, activity: :repairing),
+          TrackingEvent.new(timestamp: time + 4 * 60, activity: :driving),
+          TrackingEvent.new(timestamp: time + 5 * 60, activity: :cultivating)
+        ]
+      end
+
+      let(:expected_result) do
+        [
+          DriverActivityReport::Row.new(time, time + 1 * 60, :driving),
+          DriverActivityReport::Row.new(time + 2 * 60, time + 3 * 60, :repairing),
+          DriverActivityReport::Row.new(time + 4 * 60, time + 4 * 60, :driving),
+          DriverActivityReport::Row.new(time + 5 * 60, time + 5 * 60, :cultivating)
+        ]
+      end
+
+      it 'groups the activities based on the given order' do
+        expect(result.rows).to eq expected_result
+      end
+    end
   end
 end
