@@ -13,5 +13,9 @@ class DriverActivityReport
     def ==(other)
       from == other.from && to == other.to && activity == other.activity
     end
+
+    def time
+      to - from
+    end
   end
 end
