@@ -4,7 +4,7 @@ module DriverActivity
   RSpec.describe AddEventInteractor do
     let(:company_repository) { spy(:company_repository) }
     let(:event_repository) { spy(:event_repository, create: true) }
-    let(:interactor) { described_class.new(event_repository) }
+    let(:interactor) { described_class.new(company_repository, event_repository) }
 
     describe '#run' do
       context 'with an event payload' do
@@ -75,6 +75,30 @@ module DriverActivity
               let(:activity) { Event::REPAIRING }
 
               it 'saves event activity as repairing' do
+                interactor.run(payload)
+                expect(event_repository).to have_received(:create).with(event)
+              end
+            end
+          end
+          context 'when event position is inside company field' do
+            let(:latitude) { 6 }
+            let(:longitude) { 6 }
+
+            context 'when speed is greater than or equal to 5' do
+              let(:speed) { 5 }
+              let(:activity) { Event::DRIVING }
+
+              it 'saves event activity as driving' do
+                interactor.run(payload)
+                expect(event_repository).to have_received(:create).with(event)
+              end
+            end
+
+            context 'when speed is less than 5' do
+              let(:speed) { 4.9 }
+              let(:activity) { Event::STOPPED }
+
+              it 'saves event activity as stopped' do
                 interactor.run(payload)
                 expect(event_repository).to have_received(:create).with(event)
               end
