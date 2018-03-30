@@ -9,7 +9,7 @@ class DriverActivityReportInteractor
     report.driver_id = driver_id
     report.date = date
     report.rows = [
-      DriverActivityReport::Row.new(events.first.timestamp, events.first.timestamp, events.first.activity)
+      DriverActivityReport::Row.new(events.first.timestamp, events.last.timestamp, events.first.activity)
     ]
     report
   end
