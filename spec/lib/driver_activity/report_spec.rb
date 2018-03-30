@@ -1,8 +1,6 @@
-require 'rspec'
+require 'spec_helper'
 
-require File.join(__dir__, 'driver_activity_report')
-
-RSpec.describe DriverActivityReport::Row do
+RSpec.describe DriverActivity::Report::Row do
   let(:from) { Time.now }
   let(:to) { from + 5 }
 
