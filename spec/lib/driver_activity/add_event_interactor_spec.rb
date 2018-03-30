@@ -45,7 +45,7 @@ module DriverActivity
           {
             company_id: company.id,
             driver_id: 2,
-            timestamp: "2018-03-30'T'12:33:11",
+            timestamp: Time.new(2018, 3, 30, 12, 33, 11),
             latitude: latitude,
             longitude: longitude,
             accuracy: 12.0,

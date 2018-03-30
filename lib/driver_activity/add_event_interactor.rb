@@ -26,15 +26,9 @@ module DriverActivity
     end
 
     def process_event(payload)
-      event = Event.new(event_attributes(payload))
+      event = Event.new(payload)
       event.activity = resolve_event_activity(event)
       @event_repository.create(event)
-    end
-
-    def event_attributes(payload)
-      payload.merge(
-        timestamp: Time.parse(payload[:timestamp])
-      )
     end
 
     def resolve_event_activity(event)
