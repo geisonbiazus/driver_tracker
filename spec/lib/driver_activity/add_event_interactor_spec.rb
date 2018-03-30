@@ -7,6 +7,27 @@ module DriverActivity
     let(:interactor) { described_class.new(company_repository, event_repository) }
 
     describe '#run' do
+      context 'with an invalid payload' do
+        let(:payload) { {} }
+        let(:result) { interactor.run(payload) }
+        let(:errors) { result[:errors] }
+
+        it 'returns status error' do
+          expect(result[:status]).to eq :error
+        end
+
+        it 'validates the presence of each required attribute' do
+          required = described_class::REQUIRED
+          expect(errors).to include(field: :company_id, type: required)
+          expect(errors).to include(field: :driver_id, type: required)
+          expect(errors).to include(field: :timestamp, type: required)
+          expect(errors).to include(field: :latitude, type: required)
+          expect(errors).to include(field: :longitude, type: required)
+          expect(errors).to include(field: :accuracy, type: required)
+          expect(errors).to include(field: :speed, type: required)
+        end
+      end
+
       context 'with an event payload' do
         let(:company) do
           Company.new(
@@ -53,6 +74,10 @@ module DriverActivity
         it 'creates an event' do
           interactor.run(payload)
           expect(event_repository).to have_received(:create).with(event)
+        end
+
+        it 'returns success status' do
+          expect(interactor.run(payload)).to eq(status: :success)
         end
 
         context 'with an existing company' do
