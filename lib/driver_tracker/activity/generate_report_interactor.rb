@@ -7,7 +7,7 @@ module DriverTracker
 
       def run(driver_id, date)
         events = @event_repository
-                 .find_all_by_driver_id_and_date_sorted_chronologically(
+                 .find_all_by_driver_id_and_date_sorted_by_timestamp(
                    driver_id, date
                  )
         report = Report.new(driver_id, date)

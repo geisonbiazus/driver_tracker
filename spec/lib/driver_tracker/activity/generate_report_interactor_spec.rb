@@ -13,7 +13,7 @@ module DriverTracker::Activity
 
       before do
         allow(event_repository)
-          .to receive(:find_all_by_driver_id_and_date_sorted_chronologically)
+          .to receive(:find_all_by_driver_id_and_date_sorted_by_timestamp)
           .with(driver_id, date)
           .and_return(tracking_events)
       end
