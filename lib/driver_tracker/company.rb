@@ -1,4 +1,4 @@
-module DriverActivity
+module DriverTracker
   class Company < OpenStruct
   end
 end

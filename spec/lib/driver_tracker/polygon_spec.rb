@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Polygon do
+RSpec.describe DriverTracker::Polygon do
   let(:points) { [[0, 0], [0, 5], [5, 5], [5, 0], [0, 0]] }
   subject(:polygon) { described_class.new(points) }
 

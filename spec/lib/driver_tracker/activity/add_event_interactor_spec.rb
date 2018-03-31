@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module DriverActivity
+module DriverTracker::Activity
   RSpec.describe AddEventInteractor do
     let(:company_repository) { spy(:company_repository) }
     let(:event_repository) { spy(:event_repository, create: true) }
@@ -30,7 +30,7 @@ module DriverActivity
 
       context 'with an event payload' do
         let(:company) do
-          Company.new(
+          DriverTracker::Company.new(
             id: 1,
             field: [[0, 0], [0, 5], [5, 5], [5, 0], [0, 0]]
           )

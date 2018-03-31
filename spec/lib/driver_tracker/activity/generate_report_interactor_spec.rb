@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module DriverActivity
+module DriverTracker::Activity
   RSpec.describe GenerateReportInteractor do
     describe '#run' do
       let(:event_repository) { double }

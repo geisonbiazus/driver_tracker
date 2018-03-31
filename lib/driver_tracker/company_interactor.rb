@@ -1,4 +1,4 @@
-module DriverActivity
+module DriverTracker
   class CompanyInteractor
     INVALID = 'INVALID'.freeze
 

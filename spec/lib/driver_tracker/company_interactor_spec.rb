@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module DriverActivity
+module DriverTracker
   RSpec.describe CompanyInteractor do
     let(:created_company) { Company.new(id: 1) }
     let(:company_repository) { spy(:company_repository, create: created_company) }
