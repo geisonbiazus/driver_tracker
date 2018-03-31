@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331143150) do
+ActiveRecord::Schema.define(version: 20180331160232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activity_events", force: :cascade do |t|
+    t.bigint "company_id"
+    t.integer "driver_id"
+    t.datetime "timestamp"
+    t.float "latitude"
+    t.float "longitude"
+    t.float "accuracy"
+    t.float "speed"
+    t.string "activity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_activity_events_on_company_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.json "field"
@@ -21,4 +35,5 @@ ActiveRecord::Schema.define(version: 20180331143150) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "activity_events", "companies"
 end
