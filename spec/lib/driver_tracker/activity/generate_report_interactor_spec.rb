@@ -3,7 +3,10 @@ require 'spec_helper'
 module DriverTracker::Activity
   RSpec.describe GenerateReportInteractor do
     describe '#run' do
-      let(:event_repository) { double }
+      let(:event_repository) do
+        instance_double(DriverTracker::Repositories::EventRepository)
+      end
+
       let(:interactor) { described_class.new(event_repository) }
       let(:driver_id) { 1 }
       let(:date) { Date.today }

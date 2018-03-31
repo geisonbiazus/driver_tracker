@@ -2,9 +2,18 @@ require 'spec_helper'
 
 module DriverTracker::Activity
   RSpec.describe AddEventInteractor do
-    let(:company_repository) { spy(:company_repository) }
-    let(:event_repository) { spy(:event_repository, create: true) }
-    let(:interactor) { described_class.new(company_repository, event_repository) }
+    let(:company_repository) do
+      instance_double(DriverTracker::Repositories::CompanyRepository)
+    end
+
+    let(:event_repository) do
+      instance_double(DriverTracker::Repositories::EventRepository,
+                      create: true)
+    end
+
+    let(:interactor) do
+      described_class.new(company_repository, event_repository)
+    end
 
     describe '#run' do
       context 'with an invalid payload' do
