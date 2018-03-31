@@ -1,7 +1,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq'
-
   post 'companies', to: 'companies#create'
+  post 'activity-events', to: 'activity_events#create'
+
+  mount Sidekiq::Web => '/sidekiq'
 end
