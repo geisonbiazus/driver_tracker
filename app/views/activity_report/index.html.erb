@@ -1,23 +1,27 @@
-<p>Driver ID: <%= @report.driver_id %></p>
-<p>Date: <%= @report.date %></p>
+<% if !@report %>
+  Please provide a valid driver_id and date
+<% else %>
+  <p>Driver ID: <%= @report.driver_id %></p>
+  <p>Date: <%= @report.date %></p>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>From</th>
-      <th>To</th>
-      <th>Activity</th>
-      <th>Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @report.rows.each do |row| %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= row.from.to_s(:time) %></td>
-        <td><%= row.to.to_s(:time) %></td>
-        <td><%= row.activity.capitalize %></td>
-        <td><%= presentable_time(row.time) %></td>
+        <th>From</th>
+        <th>To</th>
+        <th>Activity</th>
+        <th>Time</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @report.rows.each do |row| %>
+        <tr>
+          <td><%= row.from.to_s(:time) %></td>
+          <td><%= row.to.to_s(:time) %></td>
+          <td><%= row.activity.capitalize %></td>
+          <td><%= presentable_time(row.time) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
