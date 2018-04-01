@@ -13,10 +13,10 @@
   <tbody>
     <% @report.rows.each do |row| %>
       <tr>
-        <td><%= row.from %></td>
-        <td><%= row.to %></td>
-        <td><%= row.activity %></td>
-        <td><%= row.time %></td>
+        <td><%= row.from.to_s(:time) %></td>
+        <td><%= row.to.to_s(:time) %></td>
+        <td><%= row.activity.capitalize %></td>
+        <td><%= presentable_time(row.time) %></td>
       </tr>
     <% end %>
   </tbody>
