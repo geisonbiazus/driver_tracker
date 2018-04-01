@@ -45,7 +45,7 @@ RSpec.describe ActivityEventRepository do
 
     it 'finds all events based on driver_id and date' do
       expect(repository.find_all_by_driver_id_and_date_sorted_by_timestamp(
-               1, Date.today
+               1, base_time.to_date
       )).to eq expected_sorted_events
     end
   end
