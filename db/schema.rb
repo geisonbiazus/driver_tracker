@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331160232) do
+ActiveRecord::Schema.define(version: 20180401172645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20180331160232) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_activity_events_on_company_id"
+    t.index ["driver_id", "timestamp"], name: "index_activity_events_on_driver_id_and_timestamp"
   end
 
   create_table "companies", force: :cascade do |t|
