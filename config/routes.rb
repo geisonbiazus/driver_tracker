@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   post 'companies', to: 'companies#create'
   post 'activity-events', to: 'activity_events#create'
 
+  root to: 'home#index'
+
   mount Sidekiq::Web => '/sidekiq'
 end

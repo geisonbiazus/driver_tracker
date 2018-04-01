@@ -1,0 +1,66 @@
+<h1>Driver Tracker</h1>
+
+<p>
+  Driver Tracker is an application to track driver's activities on farms.
+</p>
+
+<h2>Activity Report</h2>
+
+<p>
+  Access the following link to see the report:
+</p>
+
+<p>
+  <% url = activity_report_url(driver_id: 1, date: '2018-04-01') %>
+  <%= link_to(url, url) %>
+</p>
+
+<p>
+  Change the <strong>date</strong> and <strong>driver_id</strong> parameters to fetch other reports. Try the values <strong>1</strong> and <strong>2</strong> for <strong>driver_id</strong> and <strong>2018-04-01</strong> and <strong>2018-04-02</strong> for <strong>date</strong>.
+</p>
+
+<h2>Creating Companies</h2>
+
+<p>
+  You can create a new company through the API with the following <strong>curl</strong> command:
+</p>
+
+<pre>
+  curl -X POST \
+    <%= companies_url %> \
+    -H 'Cache-Control: no-cache' \
+    -H 'Content-Type: application/json' \
+    -d '{
+  	"company": {
+  		"field": "[[10, 10], [10, 20], [20, 20], [20, 10], [10, 10]]"
+  	}
+  }'
+</pre>
+
+<p>
+  The <strong>fields</strong> parameter is the field polygon and must be a string in the format of an array of arrays.
+</p>
+
+<h2>Adding Activity Events</h2>
+
+<p>
+  You can add a driver activity event through the API with the following <strong>curl</strong> command:
+</p>
+
+<pre>
+  curl -X POST \
+    <%= activity_events_url %> \
+    -H 'Cache-Control: no-cache' \
+    -H 'Content-Type: application/json' \
+    -d '{
+  	"activity_event": {
+  		"company_id": 1,
+          "driver_id": 2,
+          "timestamp": "2018-04-02T12:33:15",
+          "latitude": 3,
+          "longitude": 4,
+          "accuracy": 4,
+          "speed": 10
+  	}
+  }'
+</pre>
