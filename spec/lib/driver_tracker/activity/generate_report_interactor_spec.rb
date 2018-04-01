@@ -98,9 +98,9 @@ module DriverTracker::Activity
 
         let(:expected_result) do
           [
-            Report::Row.new(time, time + 1 * 60, :driving),
-            Report::Row.new(time + 2 * 60, time + 3 * 60, :repairing),
-            Report::Row.new(time + 4 * 60, time + 4 * 60, :driving),
+            Report::Row.new(time, time + 2 * 60, :driving),
+            Report::Row.new(time + 2 * 60, time + 4 * 60, :repairing),
+            Report::Row.new(time + 4 * 60, time + 5 * 60, :driving),
             Report::Row.new(time + 5 * 60, time + 5 * 60, :cultivating)
           ]
         end

@@ -25,10 +25,14 @@ module DriverTracker
 
       def add_event_to_report(report, event)
         last = report.rows.last
-        if last && last.activity == event.activity
-          last.to = event.timestamp
-        else
+
+        if !last
           report.rows << create_report_row(event)
+        else
+          last.to = event.timestamp
+          if last.activity != event.activity
+            report.rows << create_report_row(event)
+          end
         end
       end
 
