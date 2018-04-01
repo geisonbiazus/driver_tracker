@@ -1,0 +1,19 @@
+<p>Driver ID: <%= @report.driver_id %></p>
+<p>Date: <%= @report.date %></p>
+
+<table>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+    <th>Activity</th>
+    <th>Time</th>
+  </tr>
+  <% @report.rows.each do |row| %>
+    <tr>
+      <td><%= row.from %></td>
+      <td><%= row.to %></td>
+      <td><%= row.activity %></td>
+      <td><%= row.time %></td>
+    </tr>
+    <% end %>
+</table>
