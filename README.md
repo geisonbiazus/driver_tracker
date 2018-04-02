@@ -30,7 +30,9 @@ Instead of calculating the driver activity when generating the report, its activ
 
 The event processing is done via background job using sidekiq. If the requests volume increases the job workers can be easily scaled.
 
-Another option for scaling the application is if the database becomes slow, there is the possibility to reprocess the events grouping then in a format ready to be displayed in the report. But it isn't implemented yet.
+Another option is to move the logic of discovering if the driver is inside the polygon to the database. I know that Postgres and Elasticsearch have this function but didn't test it. Normally I prefer to express all the business logic in code unless I have a good reason not to.
+
+If the database becomes slow, there is also the possibility to reprocess the events grouping then in a format ready to be displayed in the report. But it isn't implemented yet.
 
 ### TODO
 
