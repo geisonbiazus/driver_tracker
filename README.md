@@ -1,6 +1,31 @@
 # Driver Tracker
 
-Simple app to track driver's activities from farms.
+Simple app to track driver's activities from drivers on farms. 
+Based on data sent from mobile devices every 2 seconds, it generates an activity report based on the data sent.
+
+Sent payload example:
+
+```json
+{  
+   "company_id":123,
+   "driver_id":456,
+   "timestamp":"yyyy-MM-dd'T'HH:mm:ss",
+   "latitude":52.234234,
+   "longitude":13.23324,
+   "accuracy":12.0,
+   "speed":123.45
+}
+```
+
+The report classifies the data into the following:
+
+1. **Driving** - The driver is driving on the road. This means that the speed is more than 5 km/h and the location is not part of predefined fields (geofenced) 
+
+1. **Stopped** - The driver is stoped on the road. This means that the speed is less than 5 km/h and the location is not part of predefined fields (geofenced) 
+
+1. **Cultivating** - The driver is working on a field. This means that the speed is more than 1 km/h and the location is part of predefined fields (geofenced) 
+
+1. **Repairing** - The driver is repairing a machine on a field. This means that the speed is less than 1 km/h and the location is part of predefined fields (geofenced)
 
 The application can be accessed at the following address:
 
@@ -30,9 +55,7 @@ Instead of calculating the driver activity when generating the report, its activ
 
 The event processing is done via background job using sidekiq. If the requests volume increases the job workers can be easily scaled.
 
-Another option is to move the logic of discovering if the driver is inside the polygon to the database. I know that Postgres and Elasticsearch have this function but didn't test it. Normally I prefer to express all the business logic in code unless I have a good reason not to.
-
-If the database becomes slow, there is also the possibility to reprocess the events grouping then in a format ready to be displayed in the report. But it isn't implemented yet.
+Another option is to move the logic of discovering if the driver is inside the polygon to the database. Postgres and Elasticsearch have this function. Normally I prefer to express all the business logic in code unless I have a good reason not to.
 
 ### TODO
 
